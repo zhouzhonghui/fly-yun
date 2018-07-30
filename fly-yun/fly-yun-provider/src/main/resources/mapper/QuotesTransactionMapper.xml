@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fly.yun.mapper.QuotesTransactionMapper" >
+  <resultMap id="BaseResultMap" type="cn.fly.yun.domain.QuotesTransaction" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="price_now" property="priceNow" jdbcType="VARCHAR" />
+    <result column="increase_percentage" property="increasePercentage" jdbcType="VARCHAR" />
+    <result column="high" property="high" jdbcType="VARCHAR" />
+    <result column="low" property="low" jdbcType="VARCHAR" />
+    <result column="price_doller" property="priceDoller" jdbcType="VARCHAR" />
+    <result column="price_btc" property="priceBtc" jdbcType="VARCHAR" />
+    <result column="market_value" property="marketValue" jdbcType="VARCHAR" />
+    <result column="market_value_doller" property="marketValueDoller" jdbcType="VARCHAR" />
+    <result column="market_value_btc" property="marketValueBtc" jdbcType="VARCHAR" />
+    <result column="market_value_rate" property="marketValueRate" jdbcType="VARCHAR" />
+    <result column="circulation_value" property="circulationValue" jdbcType="VARCHAR" />
+    <result column="circulation_total" property="circulationTotal" jdbcType="VARCHAR" />
+    <result column="circulation_rate" property="circulationRate" jdbcType="VARCHAR" />
+    <result column="turnover_total" property="turnoverTotal" jdbcType="VARCHAR" />
+    <result column="turnover_doller" property="turnoverDoller" jdbcType="VARCHAR" />
+    <result column="turnover_btc" property="turnoverBtc" jdbcType="VARCHAR" />
+    <result column="turnover_rank" property="turnoverRank" jdbcType="VARCHAR" />
+    <result column="turnover_rate" property="turnoverRate" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, price_now, increase_percentage, high, low, price_doller, price_btc, market_value, 
+    market_value_doller, market_value_btc, market_value_rate, circulation_value, circulation_total, 
+    circulation_rate, turnover_total, turnover_doller, turnover_btc, turnover_rank, turnover_rate, 
+    create_at, status, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.fly.yun.domain.QuotesTransactionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from quotes_transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from quotes_transaction
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from quotes_transaction
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.fly.yun.domain.QuotesTransactionExample" >
+    delete from quotes_transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.fly.yun.domain.QuotesTransaction" >
+    insert into quotes_transaction (id, price_now, increase_percentage, 
+      high, low, price_doller, 
+      price_btc, market_value, market_value_doller, 
+      market_value_btc, market_value_rate, circulation_value, 
+      circulation_total, circulation_rate, turnover_total, 
+      turnover_doller, turnover_btc, turnover_rank, 
+      turnover_rate, create_at, status, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{priceNow,jdbcType=VARCHAR}, #{increasePercentage,jdbcType=VARCHAR}, 
+      #{high,jdbcType=VARCHAR}, #{low,jdbcType=VARCHAR}, #{priceDoller,jdbcType=VARCHAR}, 
+      #{priceBtc,jdbcType=VARCHAR}, #{marketValue,jdbcType=VARCHAR}, #{marketValueDoller,jdbcType=VARCHAR}, 
+      #{marketValueBtc,jdbcType=VARCHAR}, #{marketValueRate,jdbcType=VARCHAR}, #{circulationValue,jdbcType=VARCHAR}, 
+      #{circulationTotal,jdbcType=VARCHAR}, #{circulationRate,jdbcType=VARCHAR}, #{turnoverTotal,jdbcType=VARCHAR}, 
+      #{turnoverDoller,jdbcType=VARCHAR}, #{turnoverBtc,jdbcType=VARCHAR}, #{turnoverRank,jdbcType=VARCHAR}, 
+      #{turnoverRate,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fly.yun.domain.QuotesTransaction" >
+    insert into quotes_transaction
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="priceNow != null" >
+        price_now,
+      </if>
+      <if test="increasePercentage != null" >
+        increase_percentage,
+      </if>
+      <if test="high != null" >
+        high,
+      </if>
+      <if test="low != null" >
+        low,
+      </if>
+      <if test="priceDoller != null" >
+        price_doller,
+      </if>
+      <if test="priceBtc != null" >
+        price_btc,
+      </if>
+      <if test="marketValue != null" >
+        market_value,
+      </if>
+      <if test="marketValueDoller != null" >
+        market_value_doller,
+      </if>
+      <if test="marketValueBtc != null" >
+        market_value_btc,
+      </if>
+      <if test="marketValueRate != null" >
+        market_value_rate,
+      </if>
+      <if test="circulationValue != null" >
+        circulation_value,
+      </if>
+      <if test="circulationTotal != null" >
+        circulation_total,
+      </if>
+      <if test="circulationRate != null" >
+        circulation_rate,
+      </if>
+      <if test="turnoverTotal != null" >
+        turnover_total,
+      </if>
+      <if test="turnoverDoller != null" >
+        turnover_doller,
+      </if>
+      <if test="turnoverBtc != null" >
+        turnover_btc,
+      </if>
+      <if test="turnoverRank != null" >
+        turnover_rank,
+      </if>
+      <if test="turnoverRate != null" >
+        turnover_rate,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="priceNow != null" >
+        #{priceNow,jdbcType=VARCHAR},
+      </if>
+      <if test="increasePercentage != null" >
+        #{increasePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="high != null" >
+        #{high,jdbcType=VARCHAR},
+      </if>
+      <if test="low != null" >
+        #{low,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDoller != null" >
+        #{priceDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="priceBtc != null" >
+        #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValue != null" >
+        #{marketValue,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueDoller != null" >
+        #{marketValueDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueBtc != null" >
+        #{marketValueBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueRate != null" >
+        #{marketValueRate,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationValue != null" >
+        #{circulationValue,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationTotal != null" >
+        #{circulationTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationRate != null" >
+        #{circulationRate,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverTotal != null" >
+        #{turnoverTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverDoller != null" >
+        #{turnoverDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverBtc != null" >
+        #{turnoverBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRank != null" >
+        #{turnoverRank,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRate != null" >
+        #{turnoverRate,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.fly.yun.domain.QuotesTransactionExample" resultType="java.lang.Integer" >
+    select count(*) from quotes_transaction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update quotes_transaction
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceNow != null" >
+        price_now = #{record.priceNow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.increasePercentage != null" >
+        increase_percentage = #{record.increasePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.high != null" >
+        high = #{record.high,jdbcType=VARCHAR},
+      </if>
+      <if test="record.low != null" >
+        low = #{record.low,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceDoller != null" >
+        price_doller = #{record.priceDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceBtc != null" >
+        price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketValue != null" >
+        market_value = #{record.marketValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketValueDoller != null" >
+        market_value_doller = #{record.marketValueDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketValueBtc != null" >
+        market_value_btc = #{record.marketValueBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketValueRate != null" >
+        market_value_rate = #{record.marketValueRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.circulationValue != null" >
+        circulation_value = #{record.circulationValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.circulationTotal != null" >
+        circulation_total = #{record.circulationTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.circulationRate != null" >
+        circulation_rate = #{record.circulationRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverTotal != null" >
+        turnover_total = #{record.turnoverTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverDoller != null" >
+        turnover_doller = #{record.turnoverDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverBtc != null" >
+        turnover_btc = #{record.turnoverBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverRank != null" >
+        turnover_rank = #{record.turnoverRank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverRate != null" >
+        turnover_rate = #{record.turnoverRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update quotes_transaction
+    set id = #{record.id,jdbcType=BIGINT},
+      price_now = #{record.priceNow,jdbcType=VARCHAR},
+      increase_percentage = #{record.increasePercentage,jdbcType=VARCHAR},
+      high = #{record.high,jdbcType=VARCHAR},
+      low = #{record.low,jdbcType=VARCHAR},
+      price_doller = #{record.priceDoller,jdbcType=VARCHAR},
+      price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      market_value = #{record.marketValue,jdbcType=VARCHAR},
+      market_value_doller = #{record.marketValueDoller,jdbcType=VARCHAR},
+      market_value_btc = #{record.marketValueBtc,jdbcType=VARCHAR},
+      market_value_rate = #{record.marketValueRate,jdbcType=VARCHAR},
+      circulation_value = #{record.circulationValue,jdbcType=VARCHAR},
+      circulation_total = #{record.circulationTotal,jdbcType=VARCHAR},
+      circulation_rate = #{record.circulationRate,jdbcType=VARCHAR},
+      turnover_total = #{record.turnoverTotal,jdbcType=VARCHAR},
+      turnover_doller = #{record.turnoverDoller,jdbcType=VARCHAR},
+      turnover_btc = #{record.turnoverBtc,jdbcType=VARCHAR},
+      turnover_rank = #{record.turnoverRank,jdbcType=VARCHAR},
+      turnover_rate = #{record.turnoverRate,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fly.yun.domain.QuotesTransaction" >
+    update quotes_transaction
+    <set >
+      <if test="priceNow != null" >
+        price_now = #{priceNow,jdbcType=VARCHAR},
+      </if>
+      <if test="increasePercentage != null" >
+        increase_percentage = #{increasePercentage,jdbcType=VARCHAR},
+      </if>
+      <if test="high != null" >
+        high = #{high,jdbcType=VARCHAR},
+      </if>
+      <if test="low != null" >
+        low = #{low,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDoller != null" >
+        price_doller = #{priceDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="priceBtc != null" >
+        price_btc = #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValue != null" >
+        market_value = #{marketValue,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueDoller != null" >
+        market_value_doller = #{marketValueDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueBtc != null" >
+        market_value_btc = #{marketValueBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="marketValueRate != null" >
+        market_value_rate = #{marketValueRate,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationValue != null" >
+        circulation_value = #{circulationValue,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationTotal != null" >
+        circulation_total = #{circulationTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="circulationRate != null" >
+        circulation_rate = #{circulationRate,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverTotal != null" >
+        turnover_total = #{turnoverTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverDoller != null" >
+        turnover_doller = #{turnoverDoller,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverBtc != null" >
+        turnover_btc = #{turnoverBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRank != null" >
+        turnover_rank = #{turnoverRank,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRate != null" >
+        turnover_rate = #{turnoverRate,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fly.yun.domain.QuotesTransaction" >
+    update quotes_transaction
+    set price_now = #{priceNow,jdbcType=VARCHAR},
+      increase_percentage = #{increasePercentage,jdbcType=VARCHAR},
+      high = #{high,jdbcType=VARCHAR},
+      low = #{low,jdbcType=VARCHAR},
+      price_doller = #{priceDoller,jdbcType=VARCHAR},
+      price_btc = #{priceBtc,jdbcType=VARCHAR},
+      market_value = #{marketValue,jdbcType=VARCHAR},
+      market_value_doller = #{marketValueDoller,jdbcType=VARCHAR},
+      market_value_btc = #{marketValueBtc,jdbcType=VARCHAR},
+      market_value_rate = #{marketValueRate,jdbcType=VARCHAR},
+      circulation_value = #{circulationValue,jdbcType=VARCHAR},
+      circulation_total = #{circulationTotal,jdbcType=VARCHAR},
+      circulation_rate = #{circulationRate,jdbcType=VARCHAR},
+      turnover_total = #{turnoverTotal,jdbcType=VARCHAR},
+      turnover_doller = #{turnoverDoller,jdbcType=VARCHAR},
+      turnover_btc = #{turnoverBtc,jdbcType=VARCHAR},
+      turnover_rank = #{turnoverRank,jdbcType=VARCHAR},
+      turnover_rate = #{turnoverRate,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

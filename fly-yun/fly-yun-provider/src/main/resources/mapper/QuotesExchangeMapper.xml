@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fly.yun.mapper.QuotesExchangeMapper" >
+  <resultMap id="BaseResultMap" type="cn.fly.yun.domain.QuotesExchange" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tq_id" property="tqId" jdbcType="BIGINT" />
+    <result column="exchange" property="exchange" jdbcType="VARCHAR" />
+    <result column="transaction_pair" property="transactionPair" jdbcType="VARCHAR" />
+    <result column="price_native" property="priceNative" jdbcType="VARCHAR" />
+    <result column="price_cny" property="priceCny" jdbcType="VARCHAR" />
+    <result column="price_btc" property="priceBtc" jdbcType="VARCHAR" />
+    <result column="price_eth" property="priceEth" jdbcType="VARCHAR" />
+    <result column="price_usd" property="priceUsd" jdbcType="VARCHAR" />
+    <result column="volume" property="volume" jdbcType="VARCHAR" />
+    <result column="turnover" property="turnover" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tq_id, exchange, transaction_pair, price_native, price_cny, price_btc, price_eth, 
+    price_usd, volume, turnover, create_at, status, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.fly.yun.domain.QuotesExchangeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from quotes_exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from quotes_exchange
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from quotes_exchange
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.fly.yun.domain.QuotesExchangeExample" >
+    delete from quotes_exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.fly.yun.domain.QuotesExchange" >
+    insert into quotes_exchange (id, tq_id, exchange, 
+      transaction_pair, price_native, price_cny, 
+      price_btc, price_eth, price_usd, 
+      volume, turnover, create_at, 
+      status, remark)
+    values (#{id,jdbcType=BIGINT}, #{tqId,jdbcType=BIGINT}, #{exchange,jdbcType=VARCHAR}, 
+      #{transactionPair,jdbcType=VARCHAR}, #{priceNative,jdbcType=VARCHAR}, #{priceCny,jdbcType=VARCHAR}, 
+      #{priceBtc,jdbcType=VARCHAR}, #{priceEth,jdbcType=VARCHAR}, #{priceUsd,jdbcType=VARCHAR}, 
+      #{volume,jdbcType=VARCHAR}, #{turnover,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fly.yun.domain.QuotesExchange" >
+    insert into quotes_exchange
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tqId != null" >
+        tq_id,
+      </if>
+      <if test="exchange != null" >
+        exchange,
+      </if>
+      <if test="transactionPair != null" >
+        transaction_pair,
+      </if>
+      <if test="priceNative != null" >
+        price_native,
+      </if>
+      <if test="priceCny != null" >
+        price_cny,
+      </if>
+      <if test="priceBtc != null" >
+        price_btc,
+      </if>
+      <if test="priceEth != null" >
+        price_eth,
+      </if>
+      <if test="priceUsd != null" >
+        price_usd,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+      <if test="turnover != null" >
+        turnover,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tqId != null" >
+        #{tqId,jdbcType=BIGINT},
+      </if>
+      <if test="exchange != null" >
+        #{exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionPair != null" >
+        #{transactionPair,jdbcType=VARCHAR},
+      </if>
+      <if test="priceNative != null" >
+        #{priceNative,jdbcType=VARCHAR},
+      </if>
+      <if test="priceCny != null" >
+        #{priceCny,jdbcType=VARCHAR},
+      </if>
+      <if test="priceBtc != null" >
+        #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="priceEth != null" >
+        #{priceEth,jdbcType=VARCHAR},
+      </if>
+      <if test="priceUsd != null" >
+        #{priceUsd,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="turnover != null" >
+        #{turnover,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.fly.yun.domain.QuotesExchangeExample" resultType="java.lang.Integer" >
+    select count(*) from quotes_exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update quotes_exchange
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.tqId != null" >
+        tq_id = #{record.tqId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exchange != null" >
+        exchange = #{record.exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactionPair != null" >
+        transaction_pair = #{record.transactionPair,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceNative != null" >
+        price_native = #{record.priceNative,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceCny != null" >
+        price_cny = #{record.priceCny,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceBtc != null" >
+        price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceEth != null" >
+        price_eth = #{record.priceEth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceUsd != null" >
+        price_usd = #{record.priceUsd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.volume != null" >
+        volume = #{record.volume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnover != null" >
+        turnover = #{record.turnover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update quotes_exchange
+    set id = #{record.id,jdbcType=BIGINT},
+      tq_id = #{record.tqId,jdbcType=BIGINT},
+      exchange = #{record.exchange,jdbcType=VARCHAR},
+      transaction_pair = #{record.transactionPair,jdbcType=VARCHAR},
+      price_native = #{record.priceNative,jdbcType=VARCHAR},
+      price_cny = #{record.priceCny,jdbcType=VARCHAR},
+      price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      price_eth = #{record.priceEth,jdbcType=VARCHAR},
+      price_usd = #{record.priceUsd,jdbcType=VARCHAR},
+      volume = #{record.volume,jdbcType=VARCHAR},
+      turnover = #{record.turnover,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fly.yun.domain.QuotesExchange" >
+    update quotes_exchange
+    <set >
+      <if test="tqId != null" >
+        tq_id = #{tqId,jdbcType=BIGINT},
+      </if>
+      <if test="exchange != null" >
+        exchange = #{exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionPair != null" >
+        transaction_pair = #{transactionPair,jdbcType=VARCHAR},
+      </if>
+      <if test="priceNative != null" >
+        price_native = #{priceNative,jdbcType=VARCHAR},
+      </if>
+      <if test="priceCny != null" >
+        price_cny = #{priceCny,jdbcType=VARCHAR},
+      </if>
+      <if test="priceBtc != null" >
+        price_btc = #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="priceEth != null" >
+        price_eth = #{priceEth,jdbcType=VARCHAR},
+      </if>
+      <if test="priceUsd != null" >
+        price_usd = #{priceUsd,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="turnover != null" >
+        turnover = #{turnover,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fly.yun.domain.QuotesExchange" >
+    update quotes_exchange
+    set tq_id = #{tqId,jdbcType=BIGINT},
+      exchange = #{exchange,jdbcType=VARCHAR},
+      transaction_pair = #{transactionPair,jdbcType=VARCHAR},
+      price_native = #{priceNative,jdbcType=VARCHAR},
+      price_cny = #{priceCny,jdbcType=VARCHAR},
+      price_btc = #{priceBtc,jdbcType=VARCHAR},
+      price_eth = #{priceEth,jdbcType=VARCHAR},
+      price_usd = #{priceUsd,jdbcType=VARCHAR},
+      volume = #{volume,jdbcType=VARCHAR},
+      turnover = #{turnover,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

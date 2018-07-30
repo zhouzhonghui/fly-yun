@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fly.yun.mapper.NewsInfoMapper" >
+    <resultMap id="BaseResultMap" type="cn.fly.yun.domain.NewsInfo" >
+        <id column="newsid" property="newsid" jdbcType="BIGINT" />
+        <result column="backtitle" property="backtitle" jdbcType="VARCHAR" />
+        <result column="covertype" property="covertype" jdbcType="CHAR" />
+        <result column="newstype" property="newstype" jdbcType="CHAR" />
+        <result column="publishtime" property="publishtime" jdbcType="TIMESTAMP" />
+        <result column="fronttitle" property="fronttitle" jdbcType="VARCHAR" />
+        <result column="istop" property="istop" jdbcType="CHAR" />
+        <result column="ishot" property="ishot" jdbcType="CHAR" />
+        <result column="newsfrom" property="newsfrom" jdbcType="CHAR" />
+        <result column="auther" property="auther" jdbcType="VARCHAR" />
+        <result column="linkurl" property="linkurl" jdbcType="VARCHAR" />
+        <result column="createat" property="createat" jdbcType="TIMESTAMP" />
+        <result column="modityat" property="modityat" jdbcType="TIMESTAMP" />
+        <result column="createuser" property="createuser" jdbcType="BIGINT" />
+        <result column="modifyuser" property="modifyuser" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="CHAR" />
+        <result column="attaid" property="attaid" jdbcType="VARCHAR" />
+        <result column="locale" property="locale" jdbcType="INTEGER" />
+        <result column="temp1" property="temp1" jdbcType="VARCHAR" />
+        <result column="temp2" property="temp2" jdbcType="VARCHAR" />
+        <result column="temp3" property="temp3" jdbcType="VARCHAR" />
+        <result column="temp4" property="temp4" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="cn.fly.yun.domain.NewsInfo" extends="BaseResultMap" >
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    newsid, backtitle, covertype, newstype, publishtime, fronttitle, istop, ishot, newsfrom, 
+    auther, linkurl, createat, modityat, createuser, modifyuser, status, attaid, locale, 
+    temp1, temp2, temp3, temp4
+  </sql>
+    <sql id="Blob_Column_List" >
+    content
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.fly.yun.domain.NewsInfoExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from news_info
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.fly.yun.domain.NewsInfoExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from news_info
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from news_info
+        where newsid = #{newsid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from news_info
+    where newsid = #{newsid,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="cn.fly.yun.domain.NewsInfoExample" >
+        delete from news_info
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="cn.fly.yun.domain.NewsInfo" >
+    insert into news_info (newsid, backtitle, covertype, 
+      newstype, publishtime, fronttitle, 
+      istop, ishot, newsfrom, auther, 
+      linkurl, createat, modityat, 
+      createuser, modifyuser, status, 
+      attaid, locale, temp1, 
+      temp2, temp3, temp4, 
+      content)
+    values (#{newsid,jdbcType=BIGINT}, #{backtitle,jdbcType=VARCHAR}, #{covertype,jdbcType=CHAR}, 
+      #{newstype,jdbcType=CHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{fronttitle,jdbcType=VARCHAR}, 
+      #{istop,jdbcType=CHAR}, #{ishot,jdbcType=CHAR}, #{newsfrom,jdbcType=CHAR}, #{auther,jdbcType=VARCHAR}, 
+      #{linkurl,jdbcType=VARCHAR}, #{createat,jdbcType=TIMESTAMP}, #{modityat,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=BIGINT}, #{modifyuser,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, 
+      #{attaid,jdbcType=VARCHAR}, #{locale,jdbcType=INTEGER}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.fly.yun.domain.NewsInfo" >
+        insert into news_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="newsid != null" >
+                newsid,
+            </if>
+            <if test="backtitle != null" >
+                backtitle,
+            </if>
+            <if test="covertype != null" >
+                covertype,
+            </if>
+            <if test="newstype != null" >
+                newstype,
+            </if>
+            <if test="publishtime != null" >
+                publishtime,
+            </if>
+            <if test="fronttitle != null" >
+                fronttitle,
+            </if>
+            <if test="istop != null" >
+                istop,
+            </if>
+            <if test="ishot != null" >
+                ishot,
+            </if>
+            <if test="newsfrom != null" >
+                newsfrom,
+            </if>
+            <if test="auther != null" >
+                auther,
+            </if>
+            <if test="linkurl != null" >
+                linkurl,
+            </if>
+            <if test="createat != null" >
+                createat,
+            </if>
+            <if test="modityat != null" >
+                modityat,
+            </if>
+            <if test="createuser != null" >
+                createuser,
+            </if>
+            <if test="modifyuser != null" >
+                modifyuser,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="attaid != null" >
+                attaid,
+            </if>
+            <if test="locale != null" >
+                locale,
+            </if>
+            <if test="temp1 != null" >
+                temp1,
+            </if>
+            <if test="temp2 != null" >
+                temp2,
+            </if>
+            <if test="temp3 != null" >
+                temp3,
+            </if>
+            <if test="temp4 != null" >
+                temp4,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="newsid != null" >
+                #{newsid,jdbcType=BIGINT},
+            </if>
+            <if test="backtitle != null" >
+                #{backtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="covertype != null" >
+                #{covertype,jdbcType=CHAR},
+            </if>
+            <if test="newstype != null" >
+                #{newstype,jdbcType=CHAR},
+            </if>
+            <if test="publishtime != null" >
+                #{publishtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fronttitle != null" >
+                #{fronttitle,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null" >
+                #{istop,jdbcType=CHAR},
+            </if>
+            <if test="ishot != null" >
+                #{ishot,jdbcType=CHAR},
+            </if>
+            <if test="newsfrom != null" >
+                #{newsfrom,jdbcType=CHAR},
+            </if>
+            <if test="auther != null" >
+                #{auther,jdbcType=VARCHAR},
+            </if>
+            <if test="linkurl != null" >
+                #{linkurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createat != null" >
+                #{createat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modityat != null" >
+                #{modityat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createuser != null" >
+                #{createuser,jdbcType=BIGINT},
+            </if>
+            <if test="modifyuser != null" >
+                #{modifyuser,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="attaid != null" >
+                #{attaid,jdbcType=VARCHAR},
+            </if>
+            <if test="locale != null" >
+                #{locale,jdbcType=INTEGER},
+            </if>
+            <if test="temp1 != null" >
+                #{temp1,jdbcType=VARCHAR},
+            </if>
+            <if test="temp2 != null" >
+                #{temp2,jdbcType=VARCHAR},
+            </if>
+            <if test="temp3 != null" >
+                #{temp3,jdbcType=VARCHAR},
+            </if>
+            <if test="temp4 != null" >
+                #{temp4,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="cn.fly.yun.domain.NewsInfoExample" resultType="java.lang.Integer" >
+        select count(*) from news_info
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update news_info
+        <set >
+            <if test="record.newsid != null" >
+                newsid = #{record.newsid,jdbcType=BIGINT},
+            </if>
+            <if test="record.backtitle != null" >
+                backtitle = #{record.backtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.covertype != null" >
+                covertype = #{record.covertype,jdbcType=CHAR},
+            </if>
+            <if test="record.newstype != null" >
+                newstype = #{record.newstype,jdbcType=CHAR},
+            </if>
+            <if test="record.publishtime != null" >
+                publishtime = #{record.publishtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.fronttitle != null" >
+                fronttitle = #{record.fronttitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.istop != null" >
+                istop = #{record.istop,jdbcType=CHAR},
+            </if>
+            <if test="record.ishot != null" >
+                ishot = #{record.ishot,jdbcType=CHAR},
+            </if>
+            <if test="record.newsfrom != null" >
+                newsfrom = #{record.newsfrom,jdbcType=CHAR},
+            </if>
+            <if test="record.auther != null" >
+                auther = #{record.auther,jdbcType=VARCHAR},
+            </if>
+            <if test="record.linkurl != null" >
+                linkurl = #{record.linkurl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createat != null" >
+                createat = #{record.createat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modityat != null" >
+                modityat = #{record.modityat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createuser != null" >
+                createuser = #{record.createuser,jdbcType=BIGINT},
+            </if>
+            <if test="record.modifyuser != null" >
+                modifyuser = #{record.modifyuser,jdbcType=BIGINT},
+            </if>
+            <if test="record.status != null" >
+                status = #{record.status,jdbcType=CHAR},
+            </if>
+            <if test="record.attaid != null" >
+                attaid = #{record.attaid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.locale != null" >
+                locale = #{record.locale,jdbcType=INTEGER},
+            </if>
+            <if test="record.temp1 != null" >
+                temp1 = #{record.temp1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.temp2 != null" >
+                temp2 = #{record.temp2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.temp3 != null" >
+                temp3 = #{record.temp3,jdbcType=VARCHAR},
+            </if>
+            <if test="record.temp4 != null" >
+                temp4 = #{record.temp4,jdbcType=VARCHAR},
+            </if>
+            <if test="record.content != null" >
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map" >
+        update news_info
+        set newsid = #{record.newsid,jdbcType=BIGINT},
+        backtitle = #{record.backtitle,jdbcType=VARCHAR},
+        covertype = #{record.covertype,jdbcType=CHAR},
+        newstype = #{record.newstype,jdbcType=CHAR},
+        publishtime = #{record.publishtime,jdbcType=TIMESTAMP},
+        fronttitle = #{record.fronttitle,jdbcType=VARCHAR},
+        istop = #{record.istop,jdbcType=CHAR},
+        ishot = #{record.ishot,jdbcType=CHAR},
+        newsfrom = #{record.newsfrom,jdbcType=CHAR},
+        auther = #{record.auther,jdbcType=VARCHAR},
+        linkurl = #{record.linkurl,jdbcType=VARCHAR},
+        createat = #{record.createat,jdbcType=TIMESTAMP},
+        modityat = #{record.modityat,jdbcType=TIMESTAMP},
+        createuser = #{record.createuser,jdbcType=BIGINT},
+        modifyuser = #{record.modifyuser,jdbcType=BIGINT},
+        status = #{record.status,jdbcType=CHAR},
+        attaid = #{record.attaid,jdbcType=VARCHAR},
+        locale = #{record.locale,jdbcType=INTEGER},
+        temp1 = #{record.temp1,jdbcType=VARCHAR},
+        temp2 = #{record.temp2,jdbcType=VARCHAR},
+        temp3 = #{record.temp3,jdbcType=VARCHAR},
+        temp4 = #{record.temp4,jdbcType=VARCHAR},
+        content = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update news_info
+        set newsid = #{record.newsid,jdbcType=BIGINT},
+        backtitle = #{record.backtitle,jdbcType=VARCHAR},
+        covertype = #{record.covertype,jdbcType=CHAR},
+        newstype = #{record.newstype,jdbcType=CHAR},
+        publishtime = #{record.publishtime,jdbcType=TIMESTAMP},
+        fronttitle = #{record.fronttitle,jdbcType=VARCHAR},
+        istop = #{record.istop,jdbcType=CHAR},
+        ishot = #{record.ishot,jdbcType=CHAR},
+        newsfrom = #{record.newsfrom,jdbcType=CHAR},
+        auther = #{record.auther,jdbcType=VARCHAR},
+        linkurl = #{record.linkurl,jdbcType=VARCHAR},
+        createat = #{record.createat,jdbcType=TIMESTAMP},
+        modityat = #{record.modityat,jdbcType=TIMESTAMP},
+        createuser = #{record.createuser,jdbcType=BIGINT},
+        modifyuser = #{record.modifyuser,jdbcType=BIGINT},
+        status = #{record.status,jdbcType=CHAR},
+        attaid = #{record.attaid,jdbcType=VARCHAR},
+        locale = #{record.locale,jdbcType=INTEGER},
+        temp1 = #{record.temp1,jdbcType=VARCHAR},
+        temp2 = #{record.temp2,jdbcType=VARCHAR},
+        temp3 = #{record.temp3,jdbcType=VARCHAR},
+        temp4 = #{record.temp4,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fly.yun.domain.NewsInfo" >
+        update news_info
+        <set >
+            <if test="backtitle != null" >
+                backtitle = #{backtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="covertype != null" >
+                covertype = #{covertype,jdbcType=CHAR},
+            </if>
+            <if test="newstype != null" >
+                newstype = #{newstype,jdbcType=CHAR},
+            </if>
+            <if test="publishtime != null" >
+                publishtime = #{publishtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fronttitle != null" >
+                fronttitle = #{fronttitle,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null" >
+                istop = #{istop,jdbcType=CHAR},
+            </if>
+            <if test="ishot != null" >
+                ishot = #{ishot,jdbcType=CHAR},
+            </if>
+            <if test="newsfrom != null" >
+                newsfrom = #{newsfrom,jdbcType=CHAR},
+            </if>
+            <if test="auther != null" >
+                auther = #{auther,jdbcType=VARCHAR},
+            </if>
+            <if test="linkurl != null" >
+                linkurl = #{linkurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createat != null" >
+                createat = #{createat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modityat != null" >
+                modityat = #{modityat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createuser != null" >
+                createuser = #{createuser,jdbcType=BIGINT},
+            </if>
+            <if test="modifyuser != null" >
+                modifyuser = #{modifyuser,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="attaid != null" >
+                attaid = #{attaid,jdbcType=VARCHAR},
+            </if>
+            <if test="locale != null" >
+                locale = #{locale,jdbcType=INTEGER},
+            </if>
+            <if test="temp1 != null" >
+                temp1 = #{temp1,jdbcType=VARCHAR},
+            </if>
+            <if test="temp2 != null" >
+                temp2 = #{temp2,jdbcType=VARCHAR},
+            </if>
+            <if test="temp3 != null" >
+                temp3 = #{temp3,jdbcType=VARCHAR},
+            </if>
+            <if test="temp4 != null" >
+                temp4 = #{temp4,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where newsid = #{newsid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.fly.yun.domain.NewsInfo" >
+    update news_info
+    set backtitle = #{backtitle,jdbcType=VARCHAR},
+      covertype = #{covertype,jdbcType=CHAR},
+      newstype = #{newstype,jdbcType=CHAR},
+      publishtime = #{publishtime,jdbcType=TIMESTAMP},
+      fronttitle = #{fronttitle,jdbcType=VARCHAR},
+      istop = #{istop,jdbcType=CHAR},
+      ishot = #{ishot,jdbcType=CHAR},
+      newsfrom = #{newsfrom,jdbcType=CHAR},
+      auther = #{auther,jdbcType=VARCHAR},
+      linkurl = #{linkurl,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      modityat = #{modityat,jdbcType=TIMESTAMP},
+      createuser = #{createuser,jdbcType=BIGINT},
+      modifyuser = #{modifyuser,jdbcType=BIGINT},
+      status = #{status,jdbcType=CHAR},
+      attaid = #{attaid,jdbcType=VARCHAR},
+      locale = #{locale,jdbcType=INTEGER},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where newsid = #{newsid,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fly.yun.domain.NewsInfo" >
+    update news_info
+    set backtitle = #{backtitle,jdbcType=VARCHAR},
+      covertype = #{covertype,jdbcType=CHAR},
+      newstype = #{newstype,jdbcType=CHAR},
+      publishtime = #{publishtime,jdbcType=TIMESTAMP},
+      fronttitle = #{fronttitle,jdbcType=VARCHAR},
+      istop = #{istop,jdbcType=CHAR},
+      ishot = #{ishot,jdbcType=CHAR},
+      newsfrom = #{newsfrom,jdbcType=CHAR},
+      auther = #{auther,jdbcType=VARCHAR},
+      linkurl = #{linkurl,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      modityat = #{modityat,jdbcType=TIMESTAMP},
+      createuser = #{createuser,jdbcType=BIGINT},
+      modifyuser = #{modifyuser,jdbcType=BIGINT},
+      status = #{status,jdbcType=CHAR},
+      attaid = #{attaid,jdbcType=VARCHAR},
+      locale = #{locale,jdbcType=INTEGER},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR}
+    where newsid = #{newsid,jdbcType=BIGINT}
+  </update>
+</mapper>
