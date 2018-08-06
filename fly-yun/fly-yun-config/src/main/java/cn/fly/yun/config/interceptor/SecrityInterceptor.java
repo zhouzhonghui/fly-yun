@@ -31,9 +31,9 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
     @Resource
     RedisTemplate redisTemplate;
 
-//    public SecrityInterceptor() {
-//        super();
-//    }
+    public SecrityInterceptor() {
+        super();
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
