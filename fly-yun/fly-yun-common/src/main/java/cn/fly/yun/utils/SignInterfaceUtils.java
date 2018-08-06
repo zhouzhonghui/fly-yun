@@ -15,15 +15,14 @@ public class SignInterfaceUtils {
      * 整个上送的数据进行签名，密钥客户端自己保留
      * 采用hmac256的算法
      *
-     * @param data
      * @param requestUri
      * @param timestramp
      * @param nonce
      * @param sercyKey
      * @return
      */
-    public static String signIn(String data, String requestUri, String timestramp, String nonce, String sercyKey) {
-        String buffer = data + requestUri + timestramp + nonce;
+    public static String signIn(String body,String requestUri, String timestramp, String nonce, String sercyKey) {
+        String buffer = body+requestUri + timestramp + nonce;
         String hash=sha256_HMAC(buffer,sercyKey);
         return hash;
     }
@@ -78,7 +77,10 @@ public class SignInterfaceUtils {
 
 
     public static void main(String[] args) {
-        String hash=sha256_HMAC("zhouzhonghui","abcd");
+        String hash=sha256_HMAC("app/newsInfo/quotesTransaction15332659290004AD05C1D-02AC-4345-A59D-6743F6905FA96945","fdac2951b67e4b82a3a798a520e1c687");
+        //1533265929000
+        //4AD05C1D-02AC-4345-A59D-6743F6905FA96945
+        //75607fdcac92c039a0d62d36858512f1efe6621468767ce59a9349afee30abf3
         System.out.println(hash);
     }
 

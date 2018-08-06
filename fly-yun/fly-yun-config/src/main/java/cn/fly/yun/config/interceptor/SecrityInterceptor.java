@@ -1,10 +1,12 @@
 package cn.fly.yun.config.interceptor;
 
+import cn.fly.yun.config.exceptions.BusinessException;
 import cn.fly.yun.handle.RedisHandle;
 import cn.fly.yun.utils.SignInterfaceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.UUID;
 
 @Component
 @Configuration
@@ -25,6 +28,9 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
     @Resource
     RedisHandle redisHandle;
 
+    @Resource
+    RedisTemplate redisTemplate;
+
 //    public SecrityInterceptor() {
 //        super();
 //    }
@@ -32,8 +38,9 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String secrityKey="fdac2951b67e4b82a3a798a520e1c687";
-        String body = getBodyString(request);
-        logger.info("####前端上送的整个报文体#####"+body);
+
+        String body=getBodyString(request);
+        System.out.println("#######报文体:"+body);
         String requestUri=request.getRequestURI();
         logger.info("####前端上送的requestUri#####"+requestUri);
         String timestamp=request.getHeader("timestamp");
@@ -43,33 +50,31 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
         String hash=request.getHeader("hash");
         logger.info("####前端上送的Hash#####"+hash);
         //判断所有的值是否为空，不为空才让继续
-        if(!"".equals(body)&&!"".equals(requestUri)&&!"".equals(timestamp)&&!"".equals(nonce)&&!"".equals(hash)){
+        if(!"".equals(requestUri)&&!"".equals(timestamp)&&!"".equals(nonce)&&!"".equals(hash)&&
+        null!=requestUri&&null!=timestamp &&null!=nonce&&null!=hash){
             //简单校验，1.timestamp只能在5分钟内有效，2.nonce进来后往redis里面存入数据,如果在timestamp的时间内，
             // redis里面有这个key说明重复交易，没有就往里面插入key，生效时间给5分钟。
             //如果这些校验都通过了，来计算hash吧就成功了。
             if(Long.valueOf(timestamp) < System.currentTimeMillis()){
                 if(SignInterfaceUtils.compareTimesSeconds(System.currentTimeMillis(),Long.valueOf(timestamp))){
                     if(!redisHandle.exists(nonce)) {
-                        String localHash = SignInterfaceUtils.signIn(body, requestUri, timestamp, nonce, secrityKey);
+                        String localHash = SignInterfaceUtils.signIn(body,requestUri, timestamp, nonce, secrityKey);
                         if(hash.equals(localHash)){
                             //redis没有数据，插入key,并且同时业务处理
-                            redisHandle.set(nonce, 0, 300L);
+//                            redisHandle.set(nonce, 0, 300L);
+                            redisTemplate.opsForValue().set(nonce, "0", 300L);
                         }else{
-                            response.setHeader("Content-type", "text/html;charset=UTF-8");
-                            response.getWriter().write("非法请求");
+                            throw new BusinessException("isv.user_not_authorized");
                         }
                     }else{
-                        response.setHeader("Content-type", "text/html;charset=UTF-8");
-                        response.getWriter().write("非法请求");
+                        throw new BusinessException("isv.user_not_authorized");
                     }
                 }
             }else{
-                response.setHeader("Content-type", "text/html;charset=UTF-8");
-                response.getWriter().write("非法请求");
+                throw new BusinessException("isv.user_not_authorized");
             }
         }else{
-            response.setHeader("Content-type", "text/html;charset=UTF-8");
-            response.getWriter().write("非法请求");
+            throw new BusinessException("isv.user_not_authorized");
         }
         return super.preHandle(request, response, handler);
     }
@@ -93,7 +98,6 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
     /**
      * 获取请求Body
      *
-     * @param request
      * @return
      */
     public static String getBodyString(final ServletRequest request) {

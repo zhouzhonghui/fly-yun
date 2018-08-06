@@ -15,7 +15,7 @@ public class Client {
    static Logger logger= LoggerFactory.getLogger(Client.class);
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(Client.class, args);
-        HelloServiceRefence bean = run.getBean(HelloServiceRefence.class);
-        System.out.println(bean.helloService.sayHello("tranDate"));
+//        HelloServiceRefence bean = run.getBean(HelloServiceRefence.class);
+//        System.out.println(bean.helloService.sayHello("tranDate"));
     }
 }
