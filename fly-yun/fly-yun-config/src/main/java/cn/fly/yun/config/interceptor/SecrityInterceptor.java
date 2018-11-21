@@ -3,6 +3,8 @@ package cn.fly.yun.config.interceptor;
 import cn.fly.yun.config.exceptions.BusinessException;
 import cn.fly.yun.handle.RedisHandle;
 import cn.fly.yun.utils.SignInterfaceUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -55,8 +57,7 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
             //简单校验，1.timestamp只能在5分钟内有效，2.nonce进来后往redis里面存入数据,如果在timestamp的时间内，
             // redis里面有这个key说明重复交易，没有就往里面插入key，生效时间给5分钟。
             //如果这些校验都通过了，来计算hash吧就成功了。
-            if(Long.valueOf(timestamp) < System.currentTimeMillis()){
-                if(SignInterfaceUtils.compareTimesSeconds(System.currentTimeMillis(),Long.valueOf(timestamp))){
+            if(SignInterfaceUtils.compareTimesSeconds(System.currentTimeMillis(),Long.valueOf(timestamp))){
                     if(!redisHandle.exists(nonce)) {
                         String localHash = SignInterfaceUtils.signIn(body,requestUri, timestamp, nonce, secrityKey);
                         if(hash.equals(localHash)){
@@ -69,7 +70,6 @@ public class SecrityInterceptor extends HandlerInterceptorAdapter {
                     }else{
                         throw new BusinessException("isv.user_not_authorized");
                     }
-                }
             }else{
                 throw new BusinessException("isv.user_not_authorized");
             }
