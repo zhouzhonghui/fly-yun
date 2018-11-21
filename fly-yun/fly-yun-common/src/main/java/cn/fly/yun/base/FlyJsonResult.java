@@ -1,6 +1,8 @@
 package cn.fly.yun.base;
 
-public class FlyJsonResult extends BaseReq {
+import java.io.Serializable;
+
+public class FlyJsonResult<T> implements Serializable {
     private static final long serialVersionUID = -1896378314922924761L;
 
     protected int code = 1;
@@ -8,7 +10,7 @@ public class FlyJsonResult extends BaseReq {
     //1.0.3版本增加需要的request_id
     protected String request_id;
 
-    protected Object result;
+    protected T result;
 
     public int getCode() {
         return code;
@@ -34,11 +36,11 @@ public class FlyJsonResult extends BaseReq {
         this.request_id = request_id;
     }
 
-    public Object getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(T result) {
         this.result = result;
     }
 
