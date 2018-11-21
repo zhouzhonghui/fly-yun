@@ -60,18 +60,18 @@
     <distributionManagement>
         <repository>
             <id>releases</id>
-            <url>http://192.168.0.59:8081/nexus/content/repositories/releases/</url>
+            <url>http://192.168.50.60:8081/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <url>http://192.168.0.59:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://192.168.50.60:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <repositories>
         <repository>
             <id>central</id>
             <name>wybb Repository</name>
-            <url>http://192.168.0.59:8081/nexus/content/groups/public/</url>
+            <url>http://192.168.50.60:8081/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>aliyun-repo</id>
@@ -97,7 +97,7 @@
         <pluginRepository>
             <id>central</id>
             <name>wybb Repository</name>
-            <url>http://192.168.0.59:8081/nexus/content/groups/public/</url>
+            <url>http://192.168.50.60:8081/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
