@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fly-yun-activemq</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -27,13 +27,13 @@
         <dependency>
             <groupId>cn.fly.yun</groupId>
             <artifactId>fly-yun-common</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.6</version>
         </dependency>
 
         <dependency>
             <groupId>cn.fly.yun</groupId>
             <artifactId>fly-yun-redis</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.6</version>
         </dependency>
     </dependencies>
 
