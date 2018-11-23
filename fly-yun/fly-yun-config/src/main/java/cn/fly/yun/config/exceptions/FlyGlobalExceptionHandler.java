@@ -2,8 +2,6 @@ package cn.fly.yun.config.exceptions;
 
 import cn.fly.yun.config.exceptions.response.*;
 import cn.fly.yun.config.utils.ThreadLocalUtils;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -34,6 +32,35 @@ public class FlyGlobalExceptionHandler {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(FlyGlobalExceptionHandler.class);
+
+
+    /**
+     * 未捕获异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public Object handleException(Exception e) {
+        e.printStackTrace();
+        logger.error("==============================ExceptionMapperSupport============================", e);
+        FlyErrorResponse errorResponse = new FlyUncaughtExceptionResponse(000001,getLocaleByThreadLocal(), e);
+        return errorResponse;
+    }
+
+    /**
+     * 请求参数异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public FlyErrorResponse handleException(MethodArgumentNotValidException e) {
+        logger.error("==============================ExceptionMapperSupport============================", e);
+        FlyErrorResponse errorResponse = new MethodArgumentNotValidResponse(000002,getLocaleByThreadLocal(), e);
+        return errorResponse;
+    }
+
 
     /**
      * 自定义异常
