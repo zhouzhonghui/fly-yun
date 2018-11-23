@@ -2,6 +2,8 @@ package cn.fly.yun.config.interceptor;
 
 
 import cn.fly.yun.base.BaseReq;
+import cn.fly.yun.base.BaseRes;
+import cn.fly.yun.base.FlyJsonResult;
 import cn.fly.yun.base.TransLog;
 import cn.fly.yun.config.utils.ThreadLocalUtils;
 import com.alibaba.fastjson.JSON;
@@ -44,7 +46,9 @@ public class ControllerInterceptor {
         for (Object o : objects) {
             if (o instanceof BaseReq) {
                 BaseReq baseReq = (BaseReq) o;
+                FlyJsonResult result=new FlyJsonResult();
                 BeanUtils.copyProperties(baseReq, transLog);
+                result.setRequest_id(transLog.getRequestId());
                 System.out.println(baseReq);
             }
         }

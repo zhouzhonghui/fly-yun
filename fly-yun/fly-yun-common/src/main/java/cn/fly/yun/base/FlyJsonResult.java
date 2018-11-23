@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class FlyJsonResult<T> implements Serializable {
     private static final long serialVersionUID = -1896378314922924761L;
-
-    protected int code = 1;
-    protected String message = "success!";
+    //更改返回成功的code值
+    protected int code = 0;
+    protected String message = "success";
     //1.0.3版本增加需要的request_id
     protected String request_id;
 

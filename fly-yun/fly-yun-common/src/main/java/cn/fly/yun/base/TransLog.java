@@ -62,6 +62,11 @@ public class TransLog implements Serializable {
     private String redisMobile;
 
     private Long memberId;
+    /**
+     * 客户端请求id
+     */
+    private String requestId;
+
 
     public String getToken() {
         return token;
@@ -197,5 +202,13 @@ public class TransLog implements Serializable {
 
     public void setTransName(String transName) {
         this.transName = transName;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

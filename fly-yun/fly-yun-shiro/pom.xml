@@ -9,7 +9,7 @@
 
     <artifactId>fly-yun-shiro</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 
 
     <dependencies>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>cn.fly.yun</groupId>
             <artifactId>fly-yun-redis</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.7</version>
         </dependency>
     </dependencies>
 </project>

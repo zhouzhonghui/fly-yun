@@ -124,6 +124,7 @@ public class HeaderInterceptor extends HandlerInterceptorAdapter {
 
         String userAgent = request.getHeader("User-Agent");
         String appNameEn = request.getHeader("appNameEn");
+        String requestId=request.getHeader("request_id");
         String idfa = request.getHeader("idfa");
         String inDate = DateTimeUtils.getNowDateStr(DateTimeUtils.DATETIME_FORMAT_YYYYMMDDHHMMSSSSS);
         String requestTimestamp = request.getHeader("timestamp");
@@ -142,7 +143,7 @@ public class HeaderInterceptor extends HandlerInterceptorAdapter {
         transLog.setRequestData(JSON.toJSONString(map));
         transLog.setSeq(seq);
         transLog.setToken(token);
-
+        transLog.setRequestId(requestId);
         return transLog;
     }
 }

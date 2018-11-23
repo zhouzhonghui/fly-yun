@@ -1,8 +1,10 @@
 package cn.fly.yun.config.conf;
 
 
+import cn.fly.yun.config.exceptions.errors.FlyJsonMainErrors;
 import cn.fly.yun.config.exceptions.errors.MainErrors;
 import cn.fly.yun.config.exceptions.errors.SubErrors;
+import cn.fly.yun.config.interceptor.DzSecrityInterceptor;
 import cn.fly.yun.config.interceptor.HeaderInterceptor;
 import cn.fly.yun.config.interceptor.SecrityInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -27,11 +29,16 @@ public class WebConf extends WebMvcConfigurerAdapter {
     SecrityInterceptor secrityInterceptor(){
         return new SecrityInterceptor();
     }
+
+    DzSecrityInterceptor dzSecrityInterceptor(){
+        return new DzSecrityInterceptor();
+    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         initMessageSource();
         registry.addInterceptor(localInterceptor()).excludePathPatterns("/swagger-resources/**").excludePathPatterns("/v2/**");
-        registry.addInterceptor(secrityInterceptor()).excludePathPatterns("/swagger-resources/**").excludePathPatterns("/v2/**");
+//        registry.addInterceptor(secrityInterceptor()).excludePathPatterns("/swagger-resources/**").excludePathPatterns("/v2/**");
+        registry.addInterceptor(dzSecrityInterceptor()).excludePathPatterns("/swagger-resources/**").excludePathPatterns("/v2/**");
     }
 
     @Bean
@@ -52,5 +59,6 @@ public class WebConf extends WebMvcConfigurerAdapter {
         MessageSourceAccessor messageSourceAccessor = getMessageSourceAccessor();
         MainErrors.setErrorMessageSourceAccessor(messageSourceAccessor);
         SubErrors.setErrorMessageSourceAccessor(messageSourceAccessor);
+        FlyJsonMainErrors.setErrorMessageSourceAccessor(messageSourceAccessor);
     }
 }

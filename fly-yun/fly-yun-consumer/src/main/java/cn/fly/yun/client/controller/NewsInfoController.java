@@ -1,6 +1,7 @@
 package cn.fly.yun.client.controller;
 
 import cn.fly.yun.config.annotations.RedisLock;
+import cn.fly.yun.config.exceptions.BusinessException;
 import cn.fly.yun.domain.*;
 import cn.fly.yun.handle.RedisHandle;
 import cn.fly.yun.service.NewsInfoService;
@@ -66,7 +67,13 @@ public class NewsInfoController {
 
     @RequestMapping(value = "/quotesTransaction", method = RequestMethod.POST, name = "得到行情,token")
     QuotesTransactionRes quotesTransaction(@RequestBody QuotesTransactionReq req) throws Exception {
-        QuotesTransactionRes res = newsInfoService.quotesTransaction(req);
+//        if(true) {
+//            throw new BusinessException("10001");
+//        }
+//        QuotesTransactionRes res = newsInfoService.quotesTransaction(req);
+        QuotesTransactionRes res=new QuotesTransactionRes();
+        res.setId(Long.valueOf("1"));
+        res.setHigh("111");
         return res;
     }
 }
