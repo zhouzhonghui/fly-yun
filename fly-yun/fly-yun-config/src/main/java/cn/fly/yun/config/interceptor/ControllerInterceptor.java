@@ -46,18 +46,17 @@ public class ControllerInterceptor {
         for (Object o : objects) {
             if (o instanceof BaseReq) {
                 BaseReq baseReq = (BaseReq) o;
-                FlyJsonResult result=new FlyJsonResult();
                 BeanUtils.copyProperties(baseReq, transLog);
-                result.setRequest_id(transLog.getRequestId());
                 System.out.println(baseReq);
             }
         }
 
         Object result = point.proceed();
 
-
+        FlyJsonResult result1=(FlyJsonResult)result;
         transLog.setResponseData(JSON.toJSONString(result));
         transLog.setTransName(transName);
+        result1.setRequest_id(transLog.getRequestId());
         ThreadLocalUtils.setLocalTranslog(transLog);
         return result;
     }
