@@ -124,7 +124,7 @@ public class HeaderInterceptor extends HandlerInterceptorAdapter {
 
         String userAgent = request.getHeader("User-Agent");
         String appNameEn = request.getHeader("appNameEn");
-        String requestId=request.getHeader("request_id");
+        String requestId=request.getHeader("M-Request-Id");
         String idfa = request.getHeader("idfa");
         String inDate = DateTimeUtils.getNowDateStr(DateTimeUtils.DATETIME_FORMAT_YYYYMMDDHHMMSSSSS);
         String requestTimestamp = request.getHeader("timestamp");
