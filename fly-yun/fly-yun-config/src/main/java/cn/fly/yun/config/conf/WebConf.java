@@ -30,6 +30,7 @@ public class WebConf extends WebMvcConfigurerAdapter {
         return new SecrityInterceptor();
     }
 
+    @Bean
     DzSecrityInterceptor dzSecrityInterceptor(){
         return new DzSecrityInterceptor();
     }
