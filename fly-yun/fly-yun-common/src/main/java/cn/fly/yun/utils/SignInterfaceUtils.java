@@ -29,7 +29,7 @@ public class SignInterfaceUtils {
 
 
     public static String dzSignIn(String clientId,String timestramp,String requestId,String body,String sercyKey){
-        String buffer=clientId+timestramp+requestId+body;
+        String buffer=clientId+timestramp+requestId+body+clientId;
         String hash=sha256_HMAC(buffer,sercyKey);
         return hash;
     }
