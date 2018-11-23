@@ -11,7 +11,7 @@
 
     <artifactId>fly-yun-database</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <dependencies>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

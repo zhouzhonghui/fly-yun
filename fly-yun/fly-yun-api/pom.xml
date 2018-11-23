@@ -11,14 +11,14 @@
 
     <artifactId>fly-yun-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 
     <dependencies>
 
         <dependency>
             <groupId>cn.fly.yun</groupId>
             <artifactId>fly-yun-common</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </dependency>
 
         <dependency>
