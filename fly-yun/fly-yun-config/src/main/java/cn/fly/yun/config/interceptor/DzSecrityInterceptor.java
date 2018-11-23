@@ -41,11 +41,11 @@ public class DzSecrityInterceptor extends HandlerInterceptorAdapter {
 
         String body=getBodyString(request);
         logger.info("#######报文体:"+body);
-        String mClientId=request.getHeader("M-Client-ID");
+        String mClientId=request.getHeader("M-Client-Id");
         logger.info("####前端上送的mClientId#####"+mClientId);
         String mTimestamp=request.getHeader("M-Timestamp");
         logger.info("####前端上送的mTimestamp#####"+mTimestamp);
-        String mRequestId=request.getHeader("M-Request-ID");
+        String mRequestId=request.getHeader("M-Request-Id");
         logger.info("####前端上送的mRequestId#####"+mRequestId);
         String mRequestSignature=request.getHeader("M-Request-Signature");
         logger.info("####前端上送的mRequestSignature#####"+mRequestSignature);
