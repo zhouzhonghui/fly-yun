@@ -20,7 +20,7 @@ public class GlobalCorsConfig implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type,M-Client-ID,M-Timestamp,M-Request-ID,M-Request-Signature");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

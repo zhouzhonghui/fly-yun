@@ -37,43 +37,46 @@ public class DzSecrityInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String secrityKey="29597a4d964947a4ade83269a8c5e454";
+        String method=request.getMethod();
+        if(!"OPTIONS".equals(method)) {
+            String secrityKey = "29597a4d964947a4ade83269a8c5e454";
 
-        String body=getBodyString(request);
-        logger.info("#######报文体:"+body);
-        String mClientId=request.getHeader("M-Client-Id");
-        logger.info("####前端上送的mClientId#####"+mClientId);
-        String mTimestamp=request.getHeader("M-Timestamp");
-        logger.info("####前端上送的mTimestamp#####"+mTimestamp);
-        String mRequestId=request.getHeader("M-Request-Id");
-        logger.info("####前端上送的mRequestId#####"+mRequestId);
-        String mRequestSignature=request.getHeader("M-Request-Signature");
-        logger.info("####前端上送的mRequestSignature#####"+mRequestSignature);
-        //判断所有的值是否为空，不为空才让继续
-        if(!"".equals(mClientId)&&!"".equals(mTimestamp)&&!"".equals(mRequestId)&&!"".equals(mRequestSignature)&&
-        null!=mClientId&&null!=mTimestamp &&null!=mRequestId&&null!=mRequestSignature){
-            //简单校验，1.timestamp只能在5分钟内有效，2.nonce进来后往redis里面存入数据,如果在timestamp的时间内，
-            // redis里面有这个key说明重复交易，没有就往里面插入key，生效时间给5分钟。
-            //如果这些校验都通过了，来计算hash吧就成功了。
-            if(SignInterfaceUtils.compareTimesSeconds(System.currentTimeMillis(),Long.valueOf(mTimestamp))){
-                    if(!redisHandle.exists(mRequestId)) {
+            String body = getBodyString(request);
+            logger.info("#######报文体:" + body);
+            String mClientId = request.getHeader("M-Client-Id");
+            logger.info("####前端上送的mClientId#####" + mClientId);
+            String mTimestamp = request.getHeader("M-Timestamp");
+            logger.info("####前端上送的mTimestamp#####" + mTimestamp);
+            String mRequestId = request.getHeader("M-Request-Id");
+            logger.info("####前端上送的mRequestId#####" + mRequestId);
+            String mRequestSignature = request.getHeader("M-Request-Signature");
+            logger.info("####前端上送的mRequestSignature#####" + mRequestSignature);
+            //判断所有的值是否为空，不为空才让继续
+            if (!"".equals(mClientId) && !"".equals(mTimestamp) && !"".equals(mRequestId) && !"".equals(mRequestSignature) &&
+                    null != mClientId && null != mTimestamp && null != mRequestId && null != mRequestSignature) {
+                //简单校验，1.timestamp只能在5分钟内有效，2.nonce进来后往redis里面存入数据,如果在timestamp的时间内，
+                // redis里面有这个key说明重复交易，没有就往里面插入key，生效时间给5分钟。
+                //如果这些校验都通过了，来计算hash吧就成功了。
+                if (SignInterfaceUtils.compareTimesSeconds(System.currentTimeMillis(), Long.valueOf(mTimestamp))) {
+                    if (!redisHandle.exists(mRequestId)) {
 //                        String localHash = SignInterfaceUtils.signIn(body,requestUri, timestamp, nonce, secrityKey);
-                        String localHash=SignInterfaceUtils.dzSignIn(mClientId,mTimestamp,mRequestId,body,secrityKey);
-                        if(mRequestSignature.equals(localHash)){
+                        String localHash = SignInterfaceUtils.dzSignIn(mClientId, mTimestamp, mRequestId, body, secrityKey);
+                        if (mRequestSignature.equals(localHash)) {
                             //redis没有数据，插入key,并且同时业务处理
 //                            redisHandle.set(nonce, 0, 300L);
                             redisTemplate.opsForValue().set(mRequestId, "0", 300L);
-                        }else{
+                        } else {
                             throw new BusinessException("10003");
                         }
-                    }else{
+                    } else {
                         throw new BusinessException("10003");
                     }
-            }else{
+                } else {
+                    throw new BusinessException("10003");
+                }
+            } else {
                 throw new BusinessException("10003");
             }
-        }else{
-            throw new BusinessException("10003");
         }
         return super.preHandle(request, response, handler);
     }
