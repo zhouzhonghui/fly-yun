@@ -15,10 +15,6 @@ public class RequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse httpResponse = (HttpServletResponse)servletResponse;
-        httpResponse.setHeader("Access-Control-Allow-Headers","Content-Type,M-Client-ID,M-Timestamp,M-Request-ID,M-Request-Signature");
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.addHeader("Access-Control-Allow-Origin", "*");
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
