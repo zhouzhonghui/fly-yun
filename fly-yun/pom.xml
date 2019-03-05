@@ -22,6 +22,7 @@
         <module>fly-yun-config</module>
         <module>fly-yun-redis</module>
         <module>fly-yun-activemq</module>
+        <module>fly-yun-kafka</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
